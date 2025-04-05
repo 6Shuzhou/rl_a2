@@ -138,6 +138,8 @@ def main():
     plt.title("Learning Curve: Reward vs. Environment Steps")
     plt.legend()
     plt.grid(True)
+    
+    plt.savefig("learning_curve_reinforce.png")
     plt.show()
 
     # -------------------
