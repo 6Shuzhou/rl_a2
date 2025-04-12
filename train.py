@@ -10,7 +10,7 @@ def moving_average(data, window_size):
 
 def main():
     # Define global parameters here
-    num_episodes = 1500         # Total training episodes
+    num_episodes = 3000         # Total training episodes
     learning_rate = 1e-3        # Learning rate
     gamma = 0.99                # Discount factor
     hidden_dim = 128            # Number of hidden neurons
