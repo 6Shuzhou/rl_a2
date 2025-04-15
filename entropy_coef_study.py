@@ -1,4 +1,3 @@
-# entropy_study.py
 import matplotlib.pyplot as plt
 import numpy as np
 from Advantage_Actor_Critic import train_adv_actor_critic
@@ -8,7 +7,8 @@ def moving_average(data, window_size):
 
 def average_experiments(train_func, num_experiments, **kwargs):
     """
-    重复实验 num_experiments 次，计算返回的 steps_history 和 reward_history 的平均值（按回合求均值）。
+    Repeat the experiment num_experiments times and compute the average of the returned steps_history and reward_history
+    (averaged per episode).
     """
     all_steps = []
     all_rewards = []
@@ -24,21 +24,20 @@ def average_experiments(train_func, num_experiments, **kwargs):
     return mean_steps, mean_rewards
 
 def main():
-    # 全局参数
-    num_episodes = 2000         # 每次训练的回合数
-    learning_rate = 1e-3        # 学习率
-    gamma = 0.99                # 折扣因子
-    hidden_dim = 128            # 隐层神经元数
-    env_name = "CartPole-v1"    # 训练环境
-    num_experiments = 5        # 每个 entropy_coef 重复实验次数
-    window_size = 50            # 平滑窗口大小（用于绘图时的平滑处理）
+    # Global parameters
+    num_episodes = 2000         # Number of episodes per training
+    learning_rate = 1e-3        # Learning rate
+    gamma = 0.99                # Discount factor
+    hidden_dim = 128            # Number of neurons in the hidden layer
+    env_name = "CartPole-v1"    # Training environment
+    num_experiments = 5         # Number of repeated experiments for each entropy_coef
+    window_size = 10            # Smoothing window size (used for smoothing the plot)
 
-    # 不同的熵系数设置
-    entropy_coefs = [ 0.005, 0.01, 0.02, 0.05]
+    # Settings for different entropy coefficients
+    entropy_coefs = [0.005, 0.01, 0.02, 0.05]
 
-    results = {}  # 用于保存不同 entropy_coef 下的平均实验结果
+    results = {}  
 
-    # 针对每个 entropy_coef 进行实验
     for coef in entropy_coefs:
         print(f"\nStarting experiments with entropy_coef = {coef}")
         mean_steps, mean_rewards = average_experiments(
@@ -53,11 +52,10 @@ def main():
         )
         results[coef] = (mean_steps, mean_rewards)
 
-    # 绘制学习曲线对比图（平滑后的数据）
     plt.figure(figsize=(10, 6))
     for coef, (steps, rewards) in results.items():
         smoothed_rewards = moving_average(rewards, window_size)
-        steps_smoothed = steps[window_size - 1:]  # 对应的 x 轴数据
+        steps_smoothed = steps[window_size - 1:]  
         plt.plot(steps_smoothed, smoothed_rewards, linewidth=2, label=f"entropy_coef={coef}")
 
     plt.xlabel("Cumulative Environment Steps")

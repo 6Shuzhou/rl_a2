@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from reinforce import train_reinforce
+from REINFORCE import train_reinforce
 from Actor_Critic import train_actor_critic
 from Advantage_Actor_Critic import train_adv_actor_critic
 
@@ -33,9 +33,9 @@ def main():
     learning_rate = 1e-3        # Learning rate
     gamma = 0.99                # Discount factor
     hidden_dim = 128            # Number of hidden neurons
-    entropy_coef = 0.01         # Entropy coefficient for Advantage Actor-Critic
+    entropy_coef = 0.01        # Entropy coefficient for Advantage Actor-Critic
     env_name = "CartPole-v1"    # Environment name
-    window_size = 50            # Smoothing window size for plotting
+    window_size = 10            # Smoothing window size for plotting
     num_experiments = 5         # Number of repeated experiments
 
     # Run experiments for each algorithm
